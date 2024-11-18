@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Datos de Dispositivo</title>
+</head>
+<body>
+    <h1>Registro de Datos de Dispositivo</h1>
+
+    <form id="device-form">
+        <label for="dni">DNI:</label>
+        <input type="text" id="dni" name="dni" required><br><br>
+
+        <label for="device-info">Modelo del dispositivo:</label>
+        <input type="text" id="device-info" name="device-info" disabled><br><br>
+
+        <button type="submit">Registrar</button>
+    </form>
+
+    <script>
+        // Función para obtener información del dispositivo
+        function getDeviceInfo() {
+            const userAgent = navigator.userAgent;
+            let deviceInfo = "Desconocido";
+
+            // Detectar dispositivos comunes
+            if (userAgent.match(/iPhone/i)) {
+                deviceInfo = "iPhone " + userAgent.split('iPhone')[1].split(' ')[0];
+            } else if (userAgent.match(/iPad/i)) {
+                deviceInfo = "iPad " + userAgent.split('iPad')[1].split(' ')[0];
+            } else if (userAgent.match(/Android/i)) {
+                deviceInfo = "Android " + userAgent.split('Android ')[1].split(';')[0];
+            } else if (userAgent.match(/Windows/i)) {
+                deviceInfo = "Windows Phone " + userAgent.split('Windows Phone ')[1].split(';')[0];
+            }
+
+            return deviceInfo;
+        }
+
+        // Asignar el modelo del dispositivo al campo
+        document.getElementById('device-info').value = getDeviceInfo();
+
+        // Manejar el envío del formulario
+        document.getElementById('device-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const dni = document.getElementById('dni').value;
+            const deviceInfo = document.getElementById('device-info').value;
+
+            console.log("DNI: " + dni);
+            console.log("Modelo del dispositivo: " + deviceInfo);
+
+            // Aquí puedes almacenar o enviar la información a un servidor
+            alert("Datos registrados: " + "\nDNI: " + dni + "\nModelo del dispositivo: " + deviceInfo);
+        });
+    </script>
+</body>
+</html>
